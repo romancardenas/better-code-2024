@@ -1,0 +1,66 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Open TCP Socket",
+            "type": "shell",
+            "command": "nc",
+            "args": [
+                "-l",
+                "3333"
+            ],
+            "problemMatcher": [],
+        },
+        {
+            "label": "clean",
+            "command": "cargo",
+            "args": [
+                "clean"
+            ],
+            "problemMatcher": [
+                "$rustc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "build",
+            "command": "cargo",
+            "args": [
+                "build",
+            ],
+            "problemMatcher": [
+                "$rustc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "build example",
+            "command": "cargo",
+            "args": [
+                "build",
+                 "--example=${input:example}"
+            ],
+            "problemMatcher": [
+                "$rustc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+    ],
+    "inputs": [
+		{
+			"id": "example",
+			"type": "command",
+			"command": "extension.commandvariable.remember",
+      		"args": { "key": "lastExample" }
+		},
+	]
+}

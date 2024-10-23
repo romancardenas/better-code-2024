@@ -1,0 +1,89 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug (OpenOCD)",
+            // Example debug configuration
+            "type": "cortex-debug",
+            "cwd": "${workspaceRoot}",
+            "preLaunchTask": "build example", // Defined in tasks.json
+            "executable": "${workspaceRoot}/target/riscv32imc-unknown-none-elf/debug/examples/${input:example}",
+            "request": "launch",
+            // OpenOCD settings
+            "servertype": "openocd",
+            // "serverpath": "openocd", // OpenOCD path if not in PATH
+            "configFiles": [
+                "board/sifive-hifive1-revb.cfg"
+            ],
+            // GDB settings
+            "toolchainPrefix": "riscv64-unknown-elf",
+            "gdbPath": "riscv64-unknown-elf-gdb", // path to GDB for RISC-V
+            "postLaunchCommands": [
+                "monitor arm semihosting enable",
+            ],
+            "svdFile": "${workspaceRoot}/e310x.svd",
+        },
+        {
+            "name": "Debug (QEMU)",
+            // Example debug configuration
+            "type": "cortex-debug",
+            "cwd": "${workspaceRoot}",
+            "preLaunchTask": "build example", // Defined in tasks.json
+            "executable": "${workspaceRoot}/target/riscv32imc-unknown-none-elf/debug/examples/${input:example}",
+            "request": "launch",
+            "runToEntryPoint": "main",
+            // QEMU settings
+            "servertype": "qemu",
+            "serverpath": "qemu-system-riscv32", // path to QEMU for RISC-V 32-bit
+            "cpu": "rv32",
+            "machine": "sifive_e,revb=true",
+            "svdFile": "${workspaceRoot}/e310x.svd",
+            // GDB settings
+            "toolchainPrefix": "riscv64-unknown-elf",
+            "gdbPath": "riscv64-unknown-elf-gdb", // path to GDB for RISC-V
+        },
+        {
+            "name": "Debug (QTest)",
+            // Example debug configuration
+            "type": "cortex-debug",
+            "cwd": "${workspaceRoot}",
+            "preLaunchTask": "build example", // Defined in tasks.json
+            "executable": "${workspaceRoot}/target/riscv32imc-unknown-none-elf/debug/examples/${input:example}",
+            "request": "launch",
+            "runToEntryPoint": "main",
+            // QEMU settings
+            "servertype": "qemu",
+            "serverpath": "qemu-system-riscv32", // path to QEMU for RISC-V 32-bit
+            "serverArgs": [
+                "-qtest",
+                "tcp:localhost:3333",
+            ],
+            "cpu": "rv32",
+            "machine": "sifive_e,revb=true",
+            "svdFile": "${workspaceRoot}/e310x.svd",
+            // GDB settings
+            "toolchainPrefix": "riscv64-unknown-elf",
+            "gdbPath": "riscv64-unknown-elf-gdb", // path to GDB for RISC-V
+        },
+    ],
+    "inputs": [
+        {
+            "id": "example",
+            "type": "command",
+            "command": "extension.commandvariable.pickStringRemember",
+            "args": {
+                "key": "lastExample",
+                "description": "Enter the example:",
+                "default": "1_hello_world",
+                "options": [
+                    "1_hello_world",
+                    "2_blinky",
+                    "3_mtimer",
+                    "4_button",
+                    "5_slic",
+                    "6_rtic",
+                ]
+            }
+        }
+    ]
+}

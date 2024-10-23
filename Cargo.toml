@@ -1,0 +1,15 @@
+[package]
+name = "better-code-2024"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+critical-section = { version = "1.2" }
+panic-halt = "0.2.0"
+riscv = { version = "0.12.1" }
+riscv-rt = { version = "0.13.0", features = ["single-hart"] }
+semihosting = { version = "0.1",  features = ["stdio", "panic-handler"] }
+
+hifive1 = { git = "https://github.com/riscv-rust/e310x.git", branch = "ehv1", features = ["board-redv"] }
+riscv-slic = { git = "https://github.com/romancardenas/riscv-slic.git", branch = "mecall", features = ["clint-backend"] }
+rtic = { git = "https://github.com/romancardenas/rtic.git", features = ["riscv-clint-backend"] }
