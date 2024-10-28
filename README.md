@@ -9,7 +9,7 @@ If you want to run the provided examples, you first need to install the followin
 ### Rust 1.76 or higher
 
 To install Rust on your machine, refer to [the official Rust page](https://www.rust-lang.org/tools/install).
-You can check the RUst version on your machine by running the following command in your terminal:
+You can check the Rust version on your machine by running the following command in your terminal:
 
 ```bash
 rustc --version
@@ -53,6 +53,11 @@ If you don't have it installed yet, you can run the following command:
 ```bash
 rustup target add riscv32imc-unknown-none-elf
 ```
+
+### OpenOCD 0.12 (if you want to use a physical board)
+
+If you have a physical [Sparkfun RED-V](https://www.sparkfun.com/products/retired/15594) evaluation board, you will need the [Open On-Chip Debugger (OpenOCD)](https://openocd.org) to debug the code on the chip.
+Make sure that you have OpenOCD 0.12.0 or higher installed on your machine.
 
 ### QEMU system emulation
 

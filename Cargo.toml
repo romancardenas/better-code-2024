@@ -5,7 +5,7 @@ edition = "2021"
 
 [dependencies]
 critical-section = { version = "1.2" }
-panic-halt = "0.2.0"
+panic-halt = "1.0.0"
 riscv = { version = "0.12.1" }
 riscv-rt = { version = "0.13.0", features = ["single-hart"] }
 semihosting = { version = "0.1",  features = ["stdio", "panic-handler"] }
