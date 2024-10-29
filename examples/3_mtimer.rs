@@ -9,13 +9,13 @@ use semihosting::println;
 
 const PERIOD_MS: u64 = 1000;
 const FREQUENCY_HZ: u64 = 32768;
-const CLINT_TICKS_PER_MS: u64 = PERIOD_MS * FREQUENCY_HZ / 1000;
+const CLINT_TICKS_PER_PERIOD: u64 = PERIOD_MS * FREQUENCY_HZ / 1000;
 
 /// Handler for the machine timer interrupt (handled by the CLINT)
 #[riscv_rt::core_interrupt(CoreInterrupt::MachineTimer)]
 fn mtimer_handler() {
     println!("MTIMER interrupt!");
-    CLINT::mtimecmp0().modify(|f| *f += CLINT_TICKS_PER_MS);
+    CLINT::mtimecmp0().modify(|f| *f += CLINT_TICKS_PER_PERIOD);
 }
 
 #[riscv_rt::entry]
@@ -25,7 +25,7 @@ fn main() -> ! {
     let mtimer = CLINT::mtimer();
     let (mtimecmp, mtime) = (mtimer.mtimecmp0, mtimer.mtime);
     mtime.write(0);
-    mtimecmp.write(CLINT_TICKS_PER_MS);
+    mtimecmp.write(CLINT_TICKS_PER_PERIOD);
 
     println!("Enabling interrupts...");
     unsafe {
